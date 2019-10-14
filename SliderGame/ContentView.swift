@@ -15,14 +15,18 @@ struct ContentView: View {
     @State var sliderValue = 50.0
     @State var targetValue = Int.random(in: 1...100)
     @State var totalScore = 0
-    @State var round = 1
-    @State var alertTitleStr = ""
+    @State var roundValue = 1
+    
     
     struct buttonLargeStyle: ViewModifier{
         func body(content: Content) -> some View{
             return content
                 .foregroundColor(Color.white)
                 .font(Font.custom("Arial Rounded MT Bold", size: 26))
+                .overlay(
+                    Capsule(style: .continuous)
+                    .stroke(Color.white, lineWidth: 2)
+                )
                 .padding(10)
             
         }
@@ -54,7 +58,7 @@ struct ContentView: View {
             return content
                 .shadow(radius: 3)
                 .font(Font.custom("Arial Rounded MT Bold", size: 26))
-                .foregroundColor(Color.white)
+                .foregroundColor(Color.yellow)
         }
     }
     
@@ -75,14 +79,14 @@ struct ContentView: View {
                         Text("Hit ME!").modifier(buttonLargeStyle())
                     }.alert(isPresented: $alertVisible){ () -> Alert in
                         return Alert(
-                                title: Text("\(alertTitleStr)"),
+                                title: Text("\(alertTitle())"),
                                 message: Text("今天手感為：\(sliderValueRounded()).\n" +
                                     "本次的目標為：\(targetValue).\n" +
                                     "獲得的分數：\(awardValue())"),
                                 dismissButton: .default(Text("Acknowledge!")){
                                     self.totalScore += self.awardValue()
                                     self.targetValue = Int.random(in: 1 ... 100)
-                                    self.round += 1
+                                    self.roundValue += 1
                                 }
                                 )}
             Spacer()
@@ -94,13 +98,15 @@ struct ContentView: View {
                         Text("Reset Game").modifier(buttonSmallStyle())
                     }
                     Spacer()
-                    Text("Score:\(totalScore)").modifier(labelStyle())
+                    Text("Score:").modifier(labelStyle())
+                    Text("\(totalScore)").modifier(labelScoreStyle())
+                    
                     Spacer()
-                    Text("Round:\(round)").modifier(labelStyle())
+                    Text("Round:\(roundValue)").modifier(labelStyle())
+                    //Text("\(roundValue)")
+
                     Spacer()
-                    Button(action: {
-                        self.alertVisible = true
-                    }){
+                        NavigationLink(destination: AboutViews()){
                         Text("About Game").modifier(buttonSmallStyle())
                     }
                     Spacer()
@@ -121,22 +127,33 @@ struct ContentView: View {
         var bonus = 0
         if numOffset() == 0{
             bonus = 100
-            alertTitleStr = "哎呦～不錯嘛！"
         }else if numOffset() <= 1{
             bonus = 50
-            alertTitleStr = "非常接近了!再努力一下！"
         }else if numOffset() <= 5{
             bonus = 20
-            alertTitleStr = "稍微有點差距！"
         }else{
             bonus = 0
-            alertTitleStr = "你確定你有用心？"
         }
         return maximnmScore - numOffset() + bonus
     }
+    func alertTitle() -> String{
+        
+        let title: String
+        if numOffset() == 0{
+            title = "哎呦～不錯嘛！"
+        }else if numOffset() <= 1{
+            title = "非常接近了!再努力一下！"
+        }else if numOffset() <= 5{
+            title = "稍微有點差距！"
+        }else{
+            title = "你確定你有用心？"
+        }
+        return title
+    }
+    
     func resetGame(){
         self.targetValue = Int.random(in: 1 ... 100)
-        self.round = 0
+        self.roundValue = 0
         self.totalScore = 0
         self.sliderValue = 50.0
     }
