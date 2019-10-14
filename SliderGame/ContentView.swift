@@ -110,9 +110,9 @@ struct ContentView: View {
                         Text("About Game").modifier(buttonSmallStyle())
                     }
                     Spacer()
-                }
+                }.padding(.bottom,20)
         }
-        .background(Image("menu_bg"))
+        .background(Image("menu_bg"),alignment: .center)
         .navigationBarTitle("Slider Game")
         
     }
