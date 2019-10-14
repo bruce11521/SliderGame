@@ -13,6 +13,7 @@
 		4E5EDF1B235438F9004D82FE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E5EDF1A235438F9004D82FE /* Assets.xcassets */; };
 		4E5EDF1E235438F9004D82FE /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4E5EDF1D235438F9004D82FE /* Preview Assets.xcassets */; };
 		4E5EDF21235438F9004D82FE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4E5EDF1F235438F9004D82FE /* LaunchScreen.storyboard */; };
+		4E5EDF2923544372004D82FE /* AboutViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5EDF2823544372004D82FE /* AboutViews.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		4E5EDF1D235438F9004D82FE /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4E5EDF20235438F9004D82FE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4E5EDF22235438F9004D82FE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4E5EDF2823544372004D82FE /* AboutViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViews.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,7 @@
 				4E5EDF1F235438F9004D82FE /* LaunchScreen.storyboard */,
 				4E5EDF22235438F9004D82FE /* Info.plist */,
 				4E5EDF1C235438F9004D82FE /* Preview Content */,
+				4E5EDF2823544372004D82FE /* AboutViews.swift */,
 			);
 			path = SliderGame;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4E5EDF2923544372004D82FE /* AboutViews.swift in Sources */,
 				4E5EDF15235438F7004D82FE /* AppDelegate.swift in Sources */,
 				4E5EDF17235438F7004D82FE /* SceneDelegate.swift in Sources */,
 				4E5EDF19235438F7004D82FE /* ContentView.swift in Sources */,
