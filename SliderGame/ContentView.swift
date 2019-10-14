@@ -10,9 +10,13 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @State var sliderValue = 50.0
+    
     @State var alertVisible = false
-    @State var targetValue = 0.0
+    @State var sliderValue = 50.0
+    @State var targetValue = Int.random(in: 1...100)
+    @State var totalScore = 0
+    @State var round = 1
+    @State var alertTitleStr = ""
     
     struct buttonLargeStyle: ViewModifier{
         func body(content: Content) -> some View{
@@ -57,7 +61,7 @@ struct ContentView: View {
     var body: some View {
         VStack{
             Spacer()
-            Text("移動滑桿到指定位置來獲取分數＾＾：\(targetValue)").modifier(labelStyle())
+            Text("移動滑桿到指定位置來獲取分數：\(targetValue)").modifier(labelStyle())
             Spacer()
             
                 HStack{
@@ -71,24 +75,28 @@ struct ContentView: View {
                         Text("Hit ME!").modifier(buttonLargeStyle())
                     }.alert(isPresented: $alertVisible){ () -> Alert in
                         return Alert(
-                                title: Text("title"),
-                                message: Text("今天手感為：\(sliderValue).\n" +
+                                title: Text("\(alertTitleStr)"),
+                                message: Text("今天手感為：\(sliderValueRounded()).\n" +
                                     "本次的目標為：\(targetValue).\n" +
-                                    "獲得的分數："),
-                                dismissButton: .default(Text("Acknowledge!"))
+                                    "獲得的分數：\(awardValue())"),
+                                dismissButton: .default(Text("Acknowledge!")){
+                                    self.totalScore += self.awardValue()
+                                    self.targetValue = Int.random(in: 1 ... 100)
+                                    self.round += 1
+                                }
                                 )}
             Spacer()
                 HStack{
                     Spacer()
                     Button(action: {
-                        self.alertVisible = true
+                        self.resetGame()
                     }){
                         Text("Reset Game").modifier(buttonSmallStyle())
                     }
                     Spacer()
-                    Text("Score:").modifier(labelStyle())
+                    Text("Score:\(totalScore)").modifier(labelStyle())
                     Spacer()
-                    Text("Round:").modifier(labelStyle())
+                    Text("Round:\(round)").modifier(labelStyle())
                     Spacer()
                     Button(action: {
                         self.alertVisible = true
@@ -102,9 +110,37 @@ struct ContentView: View {
         .navigationBarTitle("Slider Game")
         
     }
-    func awardValue(){
-        
+    func numOffset() -> Int{
+        return abs(targetValue - sliderValueRounded())
     }
+    func sliderValueRounded() -> Int{
+        return Int(sliderValue.rounded())
+    }
+    func awardValue() -> Int{
+        let maximnmScore = 100
+        var bonus = 0
+        if numOffset() == 0{
+            bonus = 100
+            alertTitleStr = "哎呦～不錯嘛！"
+        }else if numOffset() <= 1{
+            bonus = 50
+            alertTitleStr = "非常接近了!再努力一下！"
+        }else if numOffset() <= 5{
+            bonus = 20
+            alertTitleStr = "稍微有點差距！"
+        }else{
+            bonus = 0
+            alertTitleStr = "你確定你有用心？"
+        }
+        return maximnmScore - numOffset() + bonus
+    }
+    func resetGame(){
+        self.targetValue = Int.random(in: 1 ... 100)
+        self.round = 0
+        self.totalScore = 0
+        self.sliderValue = 50.0
+    }
+    
     
         
         
